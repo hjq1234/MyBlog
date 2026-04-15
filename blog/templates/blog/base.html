@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}我的博客{% endblock %}</title>
+    {% load static %}
+    <script src="{% static 'blog/js/theme.js' %}"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'blog/css/custom.css' %}">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg border-bottom mb-4">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="{% url 'index' %}">📝 我的博客</a>
+        <div class="d-flex align-items-center gap-3 ms-auto">
+            <a href="{% url 'index' %}" class="nav-link">首页</a>
+            <a href="{% url 'post_list' %}" class="nav-link">文章</a>
+            <form class="d-flex" action="{% url 'search' %}" method="get">
+                <input class="form-control form-control-sm me-2" type="search" name="q"
+                       placeholder="搜索..." value="{{ request.GET.q|default:'' }}" style="width:140px;">
+                <button class="btn btn-sm btn-outline-secondary" type="submit">搜</button>
+            </form>
+            <button class="btn btn-sm border-0" onclick="toggleTheme()" title="切换主题">
+                <span id="theme-icon">🌙</span>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<div class="container mb-5">
+    <div class="row g-4">
+        <div class="col-lg-8">
+            {% block content %}{% endblock %}
+        </div>
+        <div class="col-lg-4">
+            {% block sidebar %}
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h6 class="card-title mb-3">🏷️ 标签</h6>
+                    {% for tag in all_tags %}
+                    <a href="{% url 'tag_posts' tag.slug %}" class="tag-badge">{{ tag.name }}</a>
+                    {% empty %}
+                    <p class="text-muted small mb-0">暂无标签</p>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endblock %}
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
