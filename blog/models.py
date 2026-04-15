@@ -6,8 +6,12 @@ from django_summernote.fields import SummernoteTextField
 
 
 class Tag(models.Model):
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=50, unique=True, verbose_name='标签名')
     slug = models.SlugField(max_length=50, unique=True)
+
+    class Meta:
+        verbose_name = '标签'
+        verbose_name_plural = '标签'
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -19,17 +23,19 @@ class Tag(models.Model):
 
 
 class Post(models.Model):
-    title = models.CharField(max_length=200)
-    content = SummernoteTextField()
-    summary = models.TextField(blank=True)
-    cover_image = models.ImageField(upload_to='covers/', blank=True, null=True)
-    tags = models.ManyToManyField(Tag, blank=True, related_name='posts')
-    is_draft = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    title = models.CharField(max_length=200, verbose_name='标题')
+    content = SummernoteTextField(verbose_name='正文')
+    summary = models.TextField(blank=True, verbose_name='摘要')
+    cover_image = models.ImageField(upload_to='covers/', blank=True, null=True, verbose_name='封面图')
+    tags = models.ManyToManyField(Tag, blank=True, related_name='posts', verbose_name='标签')
+    is_draft = models.BooleanField(default=True, verbose_name='草稿')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='更新时间')
 
     class Meta:
         ordering = ['-created_at']
+        verbose_name = '文章'
+        verbose_name_plural = '文章'
 
     def get_summary(self):
         if self.summary:

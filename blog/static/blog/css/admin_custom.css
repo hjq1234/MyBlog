@@ -1,0 +1,32 @@
+/* 标题输入框：撑满容器宽度 */
+.field-title .vTextField {
+    width: 100% !important;
+    max-width: none !important;
+    font-size: 1.1em;
+    padding: 8px 10px;
+    box-sizing: border-box;
+}
+
+/* Content 编辑器：与 title 等宽 */
+.field-content,
+.field-content div,
+.field-content .django-summernote-widget,
+.field-content .note-editor,
+.field-content iframe {
+    width: 100% !important;
+    max-width: none !important;
+    box-sizing: border-box;
+}
+
+/* 让整行 field 容器不受 admin 默认 max-width 限制 */
+.form-row.field-title,
+.form-row.field-content {
+    width: 100%;
+    max-width: none !important;
+}
+
+/* 解除 admin 对 fieldset/form 的宽度限制 */
+#content-main .module,
+#content-main fieldset {
+    overflow: visible;
+}

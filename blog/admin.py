@@ -17,3 +17,6 @@ class PostAdmin(SummernoteModelAdmin):
     search_fields = ('title',)
     filter_horizontal = ('tags',)
     list_editable = ('is_draft',)
+
+    class Media:
+        css = {'all': ('blog/css/admin_custom.css',)}

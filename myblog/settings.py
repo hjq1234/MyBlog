@@ -131,8 +131,23 @@ MEDIA_ROOT = BASE_DIR / 'media'
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 SUMMERNOTE_CONFIG = {
+    'attachment_filesize_limit': 20 * 1024 * 1024,  # 20MB
+    'attachment_upload_to': 'django-summernote/%Y-%m-%d/',
     'summernote': {
+        'lang': 'zh-CN',
         'width': '100%',
-        'height': '480',
+        'height': '800',
+        'disableResizeEditor': False,  # 允许手动拖拽调整高度
+        'toolbar': [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'italic', 'clear']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture']],   # picture 触发附件上传，不用 base64
+            ['view', ['fullscreen', 'codeview', 'help']],
+        ],
     },
 }
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 20 * 1024 * 1024   # 20MB
+FILE_UPLOAD_MAX_MEMORY_SIZE = 20 * 1024 * 1024   # 20MB

@@ -1,0 +1,9 @@
+{
+  "permissclaudeions": {
+    "allow": [
+      "Bash(C:/Users/huangjinqing001/.claude/plugins/cache/superpowers-marketplace/superpowers/5.0.7/skills/brainstorming/scripts/start-server.sh *)",
+      "Bash(.venv/Scripts/python *)",
+      "Bash(git *)"
+    ]
+  }
+}
