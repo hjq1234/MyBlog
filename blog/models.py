@@ -1,4 +1,5 @@
 import re
+import html
 from django.db import models
 from django.utils.text import slugify
 from django_summernote.fields import SummernoteTextField
@@ -21,7 +22,7 @@ class Post(models.Model):
     title = models.CharField(max_length=200)
     content = SummernoteTextField()
     summary = models.TextField(blank=True)
-    cover_image = models.ImageField(upload_to='covers/', blank=True)
+    cover_image = models.ImageField(upload_to='covers/', blank=True, null=True)
     tags = models.ManyToManyField(Tag, blank=True, related_name='posts')
     is_draft = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -33,7 +34,7 @@ class Post(models.Model):
     def get_summary(self):
         if self.summary:
             return self.summary
-        clean = re.sub(r'<[^>]+>', '', self.content)
+        clean = html.unescape(re.sub(r'<[^>]+>', '', self.content))
         return clean[:150].strip()
 
     def get_absolute_url(self):
